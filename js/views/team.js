@@ -13,10 +13,17 @@ define([
         className: "team row well",
 
         initialize: function(){
-            this.model.bind('change', this.render, this);
+            this.model.bind('change:kills', this.renderStatus, this);
+            this.model.bind('change:deaths', this.renderStatus, this);
+        },
+
+        renderStatus: function() {
+            this.$el.find('.kills').html('<i class="icon-screenshot icon-white"></i> ' + this.model.get('kills'));
+            this.$el.find('.deaths').html('<i class="icon-ban-circle icon-white"></i> ' + this.model.get('deaths'));
         },
 
         render: function(){
+            console.log('rendering team');
             this.$el.empty();
             this.$el.append(_.template( teamTemplate, { team: this.model } ));
 
